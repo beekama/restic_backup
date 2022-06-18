@@ -1,0 +1,30 @@
+# generic excludes
+/dev/*
+/proc/*
+/run/*
+/sys/*
+/tmp/*
+
+/var/cache/restic
+/var/cache/apt/archives
+/var/lib/systemd/coredump/*
+/var/lib/apt/lists/*
+/var/log/*
+/var/tmp/*
+
+/root/.cache/*
+
+/media/*/*
+/mnt/*/*
+
+# custom excludes
+
+/home/*/.cache/
+/home/*/.local/share/Trash/
+/home/*/.thunderbird/*/ImapMail/*
+/home/*/.thunderbird/*/global-messages-db.sqlite
+/home/*/.thunderbird/*/global-messages-db.sqlite-journal
+/home/*/Downloads/*
+/home/*/mnt/*
+/home/*/tmp/*
+
