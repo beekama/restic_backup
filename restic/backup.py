@@ -8,6 +8,7 @@ import signal
 import argparse
 import subprocess
 import requests
+import credentials
 
 
 # Ensure backup runs only once at a time
@@ -25,14 +26,12 @@ def handler(asdf,fdsa):
 
 # Backup-parameters
 RESTIC = '/usr/bin/restic'
-RESTIC_REPOSITORY = 'sftp:REMOTE_RESTIC_REPOSITORY'
-RESTIC_PASSWORD = 'SUPER_SECRET_RESTIC_PASSWORD'
 RESTIC_EXCLUDE = '/etc/restic/exclude.txt'
 
-os.environ['RESTIC_PASSWORD'] = RESTIC_PASSWORD
+os.environ['RESTIC_PASSWORD'] = credentials.RESTIC_PASSWORD
 
 def handleBackup():
-    print(os.system(RESTIC + ' -r ' + RESTIC_REPOSITORY + ' --verbose backup / --exclude-caches --exclude-file '
+    print(os.system(RESTIC + ' -r ' + credentials.RESTIC_REPOSITORY + ' --verbose backup / --exclude-caches --exclude-file '
             + RESTIC_EXCLUDE))
     #    raise RuntimeError("faiiiiiiiiilllll")
     #print(subprocess.check_output("echo","foo"))
@@ -65,7 +64,7 @@ if __name__ == "__main__":
         headers = {
                 'Content-type': 'application/json',
                 }
-        data = '{ "service: "backup_kathi_laptop", "token" : "SECRET_TOKEN", "info" : "backup successful", "status" : "OK" }'
+        data = '{ "service: "backup_kathi_laptop", "token" : ' + credentials.ATHQ_SECRET_TOKEN + ' , "info" : "backup successful", "status" : "OK" }'
         response = requests.post('https://async-icinga.athq.de/', headers=headers, data=data)
 
     if args.forget:
