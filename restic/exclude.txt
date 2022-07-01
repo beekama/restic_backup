@@ -17,8 +17,7 @@
 /media/*/*
 /mnt/*/*
 
-# custom excludes
-
+# custom exclude
 /home/*/.cache/
 /home/*/.local/share/Trash/
 /home/*/.thunderbird/*/ImapMail/*
@@ -27,4 +26,14 @@
 /home/*/Downloads/*
 /home/*/mnt/*
 /home/*/tmp/*
+/home/*/Videos/*
+/home/*/uni/*
+/home/*/extCode/*
 
+
+{% if profile.repo_excludes is defined and profile.repo_excludes | length %}
+# specific excludes -> meist dinge die ich pro host nochmal extra definiere
+{% for exclude in profile.repo_excludes %}
+{{ exclude }}
+{% endfor %}
+{% endif %}
