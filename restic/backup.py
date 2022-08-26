@@ -10,7 +10,6 @@ import subprocess
 import requests
 import credentials
 
-
 # Ensure backup runs only once at a time
 LOCKFILE = '/run/restic-backup.lock'
 if (exists(LOCKFILE)):
@@ -31,24 +30,29 @@ RESTIC_EXCLUDE = '/etc/restic/exclude.txt'
 os.environ['RESTIC_PASSWORD'] = credentials.RESTIC_PASSWORD
 
 def handleBackup():
-    print(os.system(RESTIC + ' -r ' + credentials.RESTIC_REPOSITORY + ' --verbose backup / --exclude-caches --exclude-file '
-            + RESTIC_EXCLUDE))
-    #    raise RuntimeError("faiiiiiiiiilllll")
-    #print(subprocess.check_output("echo","foo"))
+    command = os.system(RESTIC + ' -r ' + credentials.RESTIC_REPOSITORY + ' --verbose backup / --exclude-caches --exclude-file ' + RESTIC_EXCLUDE)
+
+    if command == 0:
+        # check back on athq-monitoring
+        headers = {
+                'Content-type': 'application/json',
+                }
+        data = { "service": "backup_kathi_laptop", 
+                 "token" : credentials.ATHQ_SECRET_TOKEN,
+                 "info" : "backup successful",
+                 "status" : "OK" }
+        response = requests.post('https://async-icinga.athq.de/', headers=headers, json=data)
+    print("Done - success")
+
 
 def handleDelete():
 
     #execute
-    print("foo")
+    print("todo --IMPLEMENT ME--")
 
 
 # Handly Python
 if __name__ == "__main__":
-
-    #catchSignals = set(signal.Signals) - {signal.SIGKILL, signal.SIGINT}
-    #for sig in catchSignals:
-   # signal.signal(signal.SIGINT, handler) not working since subprocess is only stopped
-#    signal.signal(signal.SIGKILL, handler)
 
     parser = argparse.ArgumentParser(description='Borg-Backup script')
     parser.add_argument('--backup', action="store_true")
@@ -60,13 +64,5 @@ if __name__ == "__main__":
         # backup
         handleBackup()
         
-        # check back on athq-monitoring
-        headers = {
-                'Content-type': 'application/json',
-                }
-        data = '{ "service: "backup_kathi_laptop", "token" : ' + credentials.ATHQ_SECRET_TOKEN + ' , "info" : "backup successful", "status" : "OK" }'
-        response = requests.post('https://async-icinga.athq.de/', headers=headers, data=data)
-
     if args.forget:
         handleDelete()
-    print("DONE")

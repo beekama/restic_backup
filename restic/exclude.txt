@@ -23,6 +23,7 @@
 /home/*/.thunderbird/*/ImapMail/*
 /home/*/.thunderbird/*/global-messages-db.sqlite
 /home/*/.thunderbird/*/global-messages-db.sqlite-journal
+/home/*/.mozilla/*
 /home/*/Downloads/*
 /home/*/mnt/*
 /home/*/tmp/*
