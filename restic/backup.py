@@ -16,13 +16,6 @@ if (exists(LOCKFILE)):
     print("backup already running. Aborting this job now ...")
     exit(0)
 
-def handler(asdf,fdsa):
-    os.remove(LOCKFILE)
-    print("---cleanup---")
-    sleep(5000)
-    exit(1)
-
-
 # Backup-parameters
 RESTIC = '/usr/bin/restic'
 RESTIC_EXCLUDE = '/etc/restic/exclude.txt'
@@ -47,7 +40,6 @@ def handleBackup():
 
 
 def handleDelete():
-
     #execute
     print("todo --IMPLEMENT ME--")
 
@@ -60,6 +52,9 @@ if __name__ == "__main__":
     parser.add_argument('--forget', action="store_true")
 
     args = parser.parse_args()
+
+    if (not args.backup and not args.forget):
+        raise Exception("ABORT - no parameter specified (--backup, --forget)")
 
     if args.backup:
         # backup
