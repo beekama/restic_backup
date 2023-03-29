@@ -41,7 +41,8 @@ def handleBackup():
                  "token" : credentials.ATHQ_SECRET_TOKEN,
                  "info" : "backup successful",
                  "status" : "OK" }
-        response = requests.post('https://async-icinga.athq.de/', headers=headers, json=data)
+        response = requests.post('https://async-icinga.atlantishq.de/', headers=headers, json=data)
+
     print("Done - success")
 
 
