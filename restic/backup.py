@@ -36,7 +36,9 @@ def handleBackup():
                  "status" : "OK" }
         response = requests.post('https://async-icinga.atlantishq.de/report', headers=headers, json=data)
 
-    print("Done - success")
+        print("DONE SUCCESS")
+    else:
+        print("EXIT WITH ERROR")
 
 
 def handleDelete():
