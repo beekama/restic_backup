@@ -30,7 +30,7 @@ def handleBackup():
         headers = {
                 'Content-type': 'application/json',
                 }
-        data = { "service": "backup_kathi_laptop", 
+        data = { "service": credential.ATHQ_SERVICE,
                  "token" : credentials.ATHQ_SECRET_TOKEN,
                  "info" : "backup successful",
                  "status" : "OK" }
