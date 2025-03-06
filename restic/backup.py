@@ -35,10 +35,12 @@ def handleBackup():
                  "info" : "backup successful",
                  "status" : "OK" }
         response = requests.post('https://async-icinga.atlantishq.de/report', headers=headers, json=data)
-
-        print("DONE SUCCESS")
+        if not (200 <= response.status_code < 300):
+            print(f"Error: Failed to upload status to Icinga (Status Code: {response.status_code})", file=sys.stderr)
+        else:
+            print("===== DONE SUCCESS =====")
     else:
-        print("EXIT WITH ERROR")
+        print("EXIT WITH ERROR", file=sys.stderr)
 
 
 def handleDelete():
