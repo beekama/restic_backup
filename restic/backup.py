@@ -4,13 +4,13 @@
 
 from os.path import exists
 import os
-import signal
 import argparse
 import subprocess
 import requests
 import credentials
 import sys
 import datetime
+import json
 
 # Ensure backup runs only once at a time
 LOCKFILE = '/run/restic-backup.lock'
@@ -56,7 +56,6 @@ def handleBackup():
         return
 
     try:
-        import json
         snapshots = json.loads(snapshot_result.stdout)
         latest_snapshot = max(snapshots, key=lambda s: s['time'])
         snapshot_time = datetime.datetime.fromisoformat(latest_snapshot['time'].replace("Z", "+00:00"))
