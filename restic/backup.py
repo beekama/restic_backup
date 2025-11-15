@@ -28,6 +28,7 @@ def handleBackup():
     backup_command = [
         RESTIC,
         '-r', credentials.RESTIC_REPOSITORY,
+        '--cleanup-cache',
         '--verbose',
         'backup',
         '/',
